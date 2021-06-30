@@ -19,7 +19,9 @@ import os.path
 import platform
 import sys
 import time
+import datetime as dt
 from datetime import datetime
+from json import JSONEncoder
 
 from six.moves import cStringIO as StringIO
 import psutil
@@ -638,6 +640,14 @@ class GPUStatCollection(object):
                   default=date_handler)
         fp.write(os.linesep)
         fp.flush()
+
+
+# subclass JSONEncoder
+class DateTimeEncoder(JSONEncoder):
+        #Override the default method
+        def default(self, obj):
+            if isinstance(obj, (dt.date, dt.datetime)):
+                return obj.isoformat()
 
 
 def new_query():

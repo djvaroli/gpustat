@@ -39,6 +39,7 @@ def get_gpustat_json(debug=False):
 
 def gpu_stat_to_file(filename: str, **kwargs):
     json_gpu_stats = get_gpustat_json(**kwargs)
+    json_gpu_stats['query_time'] = json_gpu_stats['query_time'].isoformat()
     path_to_file = Path(filename)
 
     mode = "w"
